@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CST_227_Milestone_Project
 {
-    public partial class Form1 : Form
+    class CellHitImage : CellImage, ICellImage
     {
-        public Form1()
+
+        protected override string IconText => "*";
+
+        public CellHitImage(GameCell gameCell) : base(gameCell)
         {
-            InitializeComponent();
         }
     }
 }

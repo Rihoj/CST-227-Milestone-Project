@@ -45,14 +45,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="CellHitImage.cs" />
+    <Compile Include="CellSafeImage.cs" />
+    <Compile Include="CellBaseImage.cs" />
+    <Compile Include="CellImage.cs" />
+    <Compile Include="ICellImage.cs" />
+    <Compile Include="LiveCellsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="LiveCellsForm.Designer.cs">
+      <DependentUpon>LiveCellsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameBoard.cs" />
+    <Compile Include="GameCell.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="LiveCellsForm.resx">
+      <DependentUpon>LiveCellsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
