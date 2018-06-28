@@ -45,19 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CellHitImage.cs" />
-    <Compile Include="CellSafeImage.cs" />
-    <Compile Include="CellBaseImage.cs" />
-    <Compile Include="CellImage.cs" />
-    <Compile Include="ICellImage.cs" />
+    <Compile Include="CellImages\CellHitImage.cs" />
+    <Compile Include="CellImages\CellSafeImage.cs" />
+    <Compile Include="CellImages\CellBaseImage.cs" />
+    <Compile Include="Abstracts\CellImage.cs" />
+    <Compile Include="Interfaces\ICellImage.cs" />
+    <Compile Include="Interfaces\IPlayable.cs" />
     <Compile Include="LiveCellsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LiveCellsForm.Designer.cs">
       <DependentUpon>LiveCellsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameBoard.cs" />
+    <Compile Include="Abstracts\GameBoard.cs" />
     <Compile Include="GameCell.cs" />
+    <Compile Include="MinesweeperGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="LiveCellsForm.resx">

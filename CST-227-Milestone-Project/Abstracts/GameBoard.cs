@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CST_227_Milestone_Project
 {
-    class GameBoard
+    abstract class GameBoard : IPlayable
     {
         public List<GameCell> gameCells { get; } = new List<GameCell>();
         public int BoardSize { get; }
@@ -16,9 +16,6 @@ namespace CST_227_Milestone_Project
         public GameBoard(int size)
         {
             BoardSize = size * 10;
-            CreateCells();
-            ActivateCells();
-            SetNeighbors();
         }
 
         private void CreateCells()
@@ -105,15 +102,10 @@ namespace CST_227_Milestone_Project
         public ICellImage ClickCell(GameCell gc)
         {
             GameCell gameCell = gameCells.Find(cell => cell.X == gc.X && cell.Y == gc.Y);
-            if (gameCell.Live)
-            {
-                gameCell.Image = new CellHitImage(gameCell);
-            }
-            else
-            {
-                gameCell.Image = new CellSafeImage(gameCell);
-            }
+            gameCell.ClickCell();
             return gameCell.Image;
         }
+
+        public 
     }
 }

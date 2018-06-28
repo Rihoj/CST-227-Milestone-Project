@@ -13,7 +13,9 @@ namespace CST_227_Milestone_Project
     public partial class LiveCellsForm : Form
     {
         GameBoard gameBoard;
-        public int margin { get; } = 30;
+        public int margin { get; } = 60;
+        public int xPadding { get; } = 16;
+        public int yPadding { get; } = 49;
         public LiveCellsForm()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace CST_227_Milestone_Project
 
         private void StartGame()
         {
-            gameBoard = new GameBoard(1);
+            gameBoard = new MinesweeperGame(1);
             for (int x = 1; x <= gameBoard.BoardSize; x++)
             {
                 for (int y = 1; y <= gameBoard.BoardSize; y++)
@@ -43,10 +45,10 @@ namespace CST_227_Milestone_Project
                     pictureBox.MouseClick += new MouseEventHandler((o, a) => pictureBox.Image = gameBoard.ClickCell(currentCell).Image);
                     this.Controls.Add(pictureBox);
                 }
-                int xSize = (gameBoard.BoardSize * gameBoard.CellSize) + 16 + margin * 2;
-                int ySize = (gameBoard.BoardSize * gameBoard.CellSize) + margin * 2 + 49;
-                this.Size = new Size(xSize, ySize);
             }
+            int xSize = (gameBoard.BoardSize * gameBoard.CellSize) + xPadding + margin;
+            int ySize = (gameBoard.BoardSize * gameBoard.CellSize) + margin + yPadding;
+            this.Size = new Size(xSize, ySize);
         }
 
         private void revealToolStripMenuItem_Click(object sender, EventArgs e)

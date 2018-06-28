@@ -39,5 +39,17 @@ namespace CST_227_Milestone_Project
             LiveNeighbors = liveNeighbors;
         }
 
+        public void ClickCell()
+        {
+            if (Live)
+            {
+                Image = new CellHitImage(this);
+            }
+            else
+            {
+                Image = new CellSafeImage(this);
+            }
+        }
+
     }
 }
