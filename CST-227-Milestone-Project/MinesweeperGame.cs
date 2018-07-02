@@ -7,11 +7,25 @@ using System.Windows.Forms;
 
 namespace CST_227_Milestone_Project
 {
-    public class MinesweeperGame : GameBoard, IPlayable
+    class MinesweeperGame : GameBoard, IPlayable
     {
         public MinesweeperGame(int size) : base(size)
         {
         }
 
+        public override void PlayGame()
+        {
+            base.CreateCells();
+            base.ActivateCells();
+            base.SetNeighbors();
+        }
+
+        public override void RevealBoard()
+        {
+            foreach(GameCell gameCell in GameCells)
+            {
+                ClickCell(gameCell);
+            }
+        }
     }
 }

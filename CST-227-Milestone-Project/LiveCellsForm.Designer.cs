@@ -61,21 +61,21 @@
             this.revealToolStripMenuItem.Name = "revealToolStripMenuItem";
             this.revealToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.revealToolStripMenuItem.Text = "&Reveal";
-            this.revealToolStripMenuItem.Click += new System.EventHandler(this.revealToolStripMenuItem_Click);
+            this.revealToolStripMenuItem.Click += new System.EventHandler(this.RevealToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // LiveCellsForm
             // 

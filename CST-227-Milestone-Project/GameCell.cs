@@ -41,6 +41,7 @@ namespace CST_227_Milestone_Project
 
         public void ClickCell()
         {
+            Visited = true;
             if (Live)
             {
                 Image = new CellHitImage(this);

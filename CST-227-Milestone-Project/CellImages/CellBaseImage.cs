@@ -10,7 +10,7 @@ namespace CST_227_Milestone_Project
     class CellBaseImage : CellImage, ICellImage
     {
 
-        protected override string IconText => "";
+        protected override string IconText => "?";
 
         public CellBaseImage(GameCell gameCell) : base(gameCell)
         {

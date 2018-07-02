@@ -9,7 +9,7 @@ namespace CST_227_Milestone_Project
 {
     abstract class GameBoard : IPlayable
     {
-        public List<GameCell> gameCells { get; } = new List<GameCell>();
+        public List<GameCell> GameCells { get; } = new List<GameCell>();
         public int BoardSize { get; }
         public int CellSize { get; } = 30;
 
@@ -18,18 +18,18 @@ namespace CST_227_Milestone_Project
             BoardSize = size * 10;
         }
 
-        private void CreateCells()
+        protected void CreateCells()
         {
             for (int x = 1; x <= BoardSize; x++)
             {
                 for (int y = 1; y <= BoardSize; y++)
                 {
-                    gameCells.Add(new GameCell(CellSize, CellSize, x, y));
+                    GameCells.Add(new GameCell(CellSize, CellSize, x, y));
                 }
             }
         }
 
-        private void ActivateCells()
+        public void ActivateCells()
         {
             int cellCount = BoardSize * BoardSize;
             int numberOfActiveCells = (int)(cellCount * .15);
@@ -38,20 +38,20 @@ namespace CST_227_Milestone_Project
             {
                 int x = rnd.Next(1, BoardSize + 1);
                 int y = rnd.Next(1, BoardSize + 1);
-                GameCell result = gameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
+                GameCell result = GameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
                 while (result == null)
                 {
                     x = rnd.Next(1, BoardSize + 1);
                     y = rnd.Next(1, BoardSize + 1);
-                    result = gameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
+                    result = GameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
                 }
                 result.Live = true;
             }
         }
 
-        private void SetNeighbors()
+        public void SetNeighbors()
         {
-            foreach (GameCell currentCell in gameCells)
+            foreach (GameCell currentCell in GameCells)
             {
                 if (currentCell.Live)
                 {
@@ -65,47 +65,55 @@ namespace CST_227_Milestone_Project
             }
         }
 
-        private void CheckNorthNeighbor(GameCell currentCell)
+        public void CheckNorthNeighbor(GameCell currentCell)
         {
-            GameCell northNeighbor = gameCells.Find(cell => cell.X == currentCell.X - 1 && cell.Y == currentCell.Y);
+            GameCell northNeighbor = GameCells.Find(cell => cell.X == currentCell.X - 1 && cell.Y == currentCell.Y);
             if (northNeighbor != null && northNeighbor.Live)
             {
                 currentCell.LiveNeighbors++;
             }
         }
 
-        private void CheckSouthNeighbor(GameCell currentCell)
+        public void CheckSouthNeighbor(GameCell currentCell)
         {
-            GameCell southNeighbor = gameCells.Find(cell => cell.X == currentCell.X + 1 && cell.Y == currentCell.Y);
+            GameCell southNeighbor = GameCells.Find(cell => cell.X == currentCell.X + 1 && cell.Y == currentCell.Y);
             if (southNeighbor != null && southNeighbor.Live)
             {
                 currentCell.LiveNeighbors++;
             }
         }
-        private void CheckEastNeighbor(GameCell currentCell)
+        public void CheckEastNeighbor(GameCell currentCell)
         {
-            GameCell eastNeighbor = gameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y - 1);
+            GameCell eastNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y - 1);
             if (eastNeighbor != null && eastNeighbor.Live)
             {
                 currentCell.LiveNeighbors++;
             }
         }
-        private void CheckWestNeighbor(GameCell currentCell)
+        public void CheckWestNeighbor(GameCell currentCell)
         {
-            GameCell westNeighbor = gameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y + 1);
+            GameCell westNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y + 1);
             if (westNeighbor != null && westNeighbor.Live)
             {
                 currentCell.LiveNeighbors++;
             }
         }
 
-        public ICellImage ClickCell(GameCell gc)
+        public GameCell ClickCell(GameCell gc)
         {
-            GameCell gameCell = gameCells.Find(cell => cell.X == gc.X && cell.Y == gc.Y);
+            GameCell gameCell = GameCells.Find(cell => cell.X == gc.X && cell.Y == gc.Y);
             gameCell.ClickCell();
-            return gameCell.Image;
+            return gameCell;
         }
 
-        public 
+        public virtual void RevealBoard()
+        {
+            foreach(GameCell gameCell in GameCells)
+            {
+                gameCell.ClickCell();
+            }
+        }
+
+        public abstract void PlayGame();
     }
 }

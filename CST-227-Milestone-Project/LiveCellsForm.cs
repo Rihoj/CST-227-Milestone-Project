@@ -16,6 +16,9 @@ namespace CST_227_Milestone_Project
         public int margin { get; } = 60;
         public int xPadding { get; } = 16;
         public int yPadding { get; } = 49;
+        private Dictionary<GameCell, PictureBox> cells = new Dictionary<GameCell, PictureBox>();
+        private bool inProgress = false;
+
         public LiveCellsForm()
         {
             InitializeComponent();
@@ -29,11 +32,13 @@ namespace CST_227_Milestone_Project
         private void StartGame()
         {
             gameBoard = new MinesweeperGame(1);
+            inProgress = true;
+            gameBoard.PlayGame();
             for (int x = 1; x <= gameBoard.BoardSize; x++)
             {
                 for (int y = 1; y <= gameBoard.BoardSize; y++)
                 {
-                    GameCell currentCell = gameBoard.gameCells.Find(cell => cell.X == x && cell.Y == y);
+                    GameCell currentCell = gameBoard.GameCells.Find(cell => cell.X == x && cell.Y == y);
                     PictureBox pictureBox = new PictureBox
                     {
                         Name = "pictureBox" + x.ToString() + y.ToString(),
@@ -42,8 +47,22 @@ namespace CST_227_Milestone_Project
                         Visible = true
                     };
                     pictureBox.Image = currentCell.Image.Image;
-                    pictureBox.MouseClick += new MouseEventHandler((o, a) => pictureBox.Image = gameBoard.ClickCell(currentCell).Image);
+                    pictureBox.MouseClick += new MouseEventHandler((o, a) => 
+                        {
+                            pictureBox.Image = gameBoard.ClickCell(currentCell).Image.Image;
+                            if (currentCell.Live)
+                            {
+                                RevealBoard();
+                            }
+                            List<GameCell> gameCells = gameBoard.GameCells.FindAll(cell => cell.Live == false && cell.Visited == false);
+                            if(gameCells.Count == 0)
+                            {
+                                UserWins();
+                            }
+                        }
+                    );
                     this.Controls.Add(pictureBox);
+                    cells.Add(currentCell, pictureBox);
                 }
             }
             int xSize = (gameBoard.BoardSize * gameBoard.CellSize) + xPadding + margin;
@@ -51,22 +70,49 @@ namespace CST_227_Milestone_Project
             this.Size = new Size(xSize, ySize);
         }
 
-        private void revealToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RevealToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach(GameCell currentCell in gameBoard.gameCells)
-            {
-                ((PictureBox) this.Controls.Find("pictureBox"+currentCell.X.ToString()+currentCell.Y.ToString(), true)[0]).Image = gameBoard.ClickCell(currentCell).Image;
-            }
+            RevealBoard(true);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UserWins()
+        {
+            string message = "WOW! You Won!";
+            if (inProgress)
+            {
+                gameBoard.RevealBoard();
+                MessageBox.Show(message, "WINNER!");
+            }
+            inProgress = false;
+        }
+        
+        private void RevealBoard(bool userInitiated = false)
+        {
+            string message = "Oh man you lost!";
+            if (inProgress)
+            {
+                gameBoard.RevealBoard();
+                foreach (KeyValuePair<GameCell, PictureBox> cell in cells)
+                {
+                    cell.Value.Image = cell.Key.Image.Image;
+                }
+                if (userInitiated)
+                {
+                    message = "You revealed the board.";
+                }
+                MessageBox.Show(message, "Game Over");
+            }
+            inProgress = false;
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (GameCell currentCell in gameBoard.gameCells)
+            foreach (GameCell currentCell in gameBoard.GameCells)
             {
                 (this.Controls.Find("pictureBox" + currentCell.X.ToString() + currentCell.Y.ToString(), true)[0]).Dispose();
             }
