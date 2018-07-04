@@ -14,6 +14,6 @@ namespace CST_227_Milestone_Project
         {
         }
 
-        protected override string IconText => (gc.LiveNeighbors == 0) ? "~" : gc.LiveNeighbors.ToString();
+        protected override string IconText => (gc.Neighbors.LiveNeighbors == 0) ? " " : gc.Neighbors.LiveNeighbors.ToString();
     }
 }

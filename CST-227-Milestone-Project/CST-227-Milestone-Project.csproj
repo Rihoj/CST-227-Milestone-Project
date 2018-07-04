@@ -60,6 +60,7 @@
     <Compile Include="Abstracts\GameBoard.cs" />
     <Compile Include="GameCell.cs" />
     <Compile Include="MinesweeperGame.cs" />
+    <Compile Include="Neighbors.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="LiveCellsForm.resx">

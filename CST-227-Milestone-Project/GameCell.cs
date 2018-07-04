@@ -16,7 +16,7 @@ namespace CST_227_Milestone_Project
         public int Y { get; set; } = -1;
         public bool Visited { get; set; } = false;
         public bool Live { get; set; } = false;
-        public int LiveNeighbors { get; set; } = 0;
+        public Neighbors Neighbors { get; set; } = new Neighbors();
         public ICellImage Image { get; set; }
 
         public GameCell(int x, int y)
@@ -32,16 +32,16 @@ namespace CST_227_Milestone_Project
             Y = y;
         }
 
-        public GameCell(int x, int y, bool visited, bool live, int liveNeighbors) : this(x, y)
+        public GameCell(int x, int y, bool visited, bool live) : this(x, y)
         {
             Visited = visited;
             Live = live;
-            LiveNeighbors = liveNeighbors;
         }
 
         public void ClickCell()
         {
             Visited = true;
+            Image = null;
             if (Live)
             {
                 Image = new CellHitImage(this);
@@ -50,6 +50,7 @@ namespace CST_227_Milestone_Project
             {
                 Image = new CellSafeImage(this);
             }
+            Neighbors.CheckNeighbors();
         }
 
     }

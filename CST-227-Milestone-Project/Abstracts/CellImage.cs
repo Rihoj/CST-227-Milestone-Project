@@ -16,7 +16,10 @@ namespace CST_227_Milestone_Project
         protected int CellWidth;
         protected int CellHeight;
         protected Color lightGray = Color.FromArgb(255, 204, 204, 204);
+        protected Color mediumGray = Color.FromArgb(255, 136, 136, 136);
         protected Color darkGray = Color.FromArgb(255, 68, 68, 68);
+        Brush brush = new SolidBrush(Color.Black);
+        Font font;
         protected abstract string IconText { get; }
         
         public CellImage(GameCell gameCell)
@@ -24,6 +27,7 @@ namespace CST_227_Milestone_Project
             gc = gameCell;
             CellWidth = gameCell.CellWidth;
             CellHeight = gameCell.CellHeight;
+            font = new Font("Courier New", CellWidth, GraphicsUnit.Pixel);
             CreateImage();
             CreateIcon();
         }
@@ -51,8 +55,6 @@ namespace CST_227_Milestone_Project
         protected virtual CellImage CreateIcon()
         {
             Graphics drawing = Graphics.FromImage(image);
-            Brush brush = new SolidBrush(Color.Black);
-            Font font = new Font("Courier New", CellWidth, GraphicsUnit.Pixel);
             drawing.DrawString(IconText, font, brush, 0, 0);
             return this;
         }

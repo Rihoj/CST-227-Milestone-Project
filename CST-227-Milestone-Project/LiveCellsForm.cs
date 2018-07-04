@@ -29,6 +29,23 @@ namespace CST_227_Milestone_Project
             StartGame();
         }
 
+        private void FrameUpdate()
+        {
+            UpdatePictures();
+            List<GameCell> gameCells = gameBoard.GameCells.FindAll(cell => cell.Live == false && cell.Visited == false);
+            if (gameCells.Count == 0)
+            {
+                UserWins();
+            }
+        }
+
+        private void UpdatePictures()
+        {
+            foreach (KeyValuePair<GameCell, PictureBox> cell in cells)
+            {
+                cell.Value.Image = cell.Key.Image.Image;
+            }
+        }
         private void StartGame()
         {
             gameBoard = new MinesweeperGame(1);
@@ -49,16 +66,12 @@ namespace CST_227_Milestone_Project
                     pictureBox.Image = currentCell.Image.Image;
                     pictureBox.MouseClick += new MouseEventHandler((o, a) => 
                         {
-                            pictureBox.Image = gameBoard.ClickCell(currentCell).Image.Image;
+                            gameBoard.ClickCell(currentCell);
                             if (currentCell.Live)
                             {
                                 RevealBoard();
                             }
-                            List<GameCell> gameCells = gameBoard.GameCells.FindAll(cell => cell.Live == false && cell.Visited == false);
-                            if(gameCells.Count == 0)
-                            {
-                                UserWins();
-                            }
+                            FrameUpdate();
                         }
                     );
                     this.Controls.Add(pictureBox);
@@ -80,7 +93,8 @@ namespace CST_227_Milestone_Project
             string message = "WOW! You Won!";
             if (inProgress)
             {
-                gameBoard.RevealBoard();
+                //gameBoard.RevealBoard();
+                UpdatePictures();
                 MessageBox.Show(message, "WINNER!");
             }
             inProgress = false;
@@ -92,10 +106,7 @@ namespace CST_227_Milestone_Project
             if (inProgress)
             {
                 gameBoard.RevealBoard();
-                foreach (KeyValuePair<GameCell, PictureBox> cell in cells)
-                {
-                    cell.Value.Image = cell.Key.Image.Image;
-                }
+                UpdatePictures();
                 if (userInitiated)
                 {
                     message = "You revealed the board.";

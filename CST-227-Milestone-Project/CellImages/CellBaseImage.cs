@@ -10,7 +10,7 @@ namespace CST_227_Milestone_Project
     class CellBaseImage : CellImage, ICellImage
     {
 
-        protected override string IconText => "?";
+        protected override string IconText => "";
 
         public CellBaseImage(GameCell gameCell) : base(gameCell)
         {
@@ -23,9 +23,12 @@ namespace CST_227_Milestone_Project
             {
                 for (int y = 0; y < CellHeight; y++)
                 {
-                    if (x == 0 || y == 0 || x == CellWidth-1 || y == CellHeight-1)
+                    if (x == 0 || y == 0 || x == CellWidth-1 || y >= CellHeight-1)
                     {
                         image.SetPixel(x, y, darkGray);
+                    }else if(x <= 2 || y <= 2 || x >= CellWidth - 2 || y >= CellHeight - 2)
+                    {
+                        image.SetPixel(x, y, mediumGray);
                     }
                     else
                     {

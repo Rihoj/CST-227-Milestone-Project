@@ -53,49 +53,11 @@ namespace CST_227_Milestone_Project
         {
             foreach (GameCell currentCell in GameCells)
             {
-                if (currentCell.Live)
-                {
-                    currentCell.LiveNeighbors = 9;
-                    continue;
-                }
-                CheckNorthNeighbor(currentCell);
-                CheckSouthNeighbor(currentCell);
-                CheckEastNeighbor(currentCell);
-                CheckWestNeighbor(currentCell);
-            }
-        }
-
-        public void CheckNorthNeighbor(GameCell currentCell)
-        {
-            GameCell northNeighbor = GameCells.Find(cell => cell.X == currentCell.X - 1 && cell.Y == currentCell.Y);
-            if (northNeighbor != null && northNeighbor.Live)
-            {
-                currentCell.LiveNeighbors++;
-            }
-        }
-
-        public void CheckSouthNeighbor(GameCell currentCell)
-        {
-            GameCell southNeighbor = GameCells.Find(cell => cell.X == currentCell.X + 1 && cell.Y == currentCell.Y);
-            if (southNeighbor != null && southNeighbor.Live)
-            {
-                currentCell.LiveNeighbors++;
-            }
-        }
-        public void CheckEastNeighbor(GameCell currentCell)
-        {
-            GameCell eastNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y - 1);
-            if (eastNeighbor != null && eastNeighbor.Live)
-            {
-                currentCell.LiveNeighbors++;
-            }
-        }
-        public void CheckWestNeighbor(GameCell currentCell)
-        {
-            GameCell westNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y + 1);
-            if (westNeighbor != null && westNeighbor.Live)
-            {
-                currentCell.LiveNeighbors++;
+                GameCell northNeighbor = GameCells.Find(cell => cell.X == currentCell.X - 1 && cell.Y == currentCell.Y);
+                GameCell eastNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y - 1);
+                GameCell southNeighbor = GameCells.Find(cell => cell.X == currentCell.X + 1 && cell.Y == currentCell.Y);
+                GameCell westNeighbor = GameCells.Find(cell => cell.X == currentCell.X && cell.Y == currentCell.Y + 1);
+                currentCell.Neighbors = new Neighbors(northNeighbor, eastNeighbor, southNeighbor, westNeighbor);
             }
         }
 
