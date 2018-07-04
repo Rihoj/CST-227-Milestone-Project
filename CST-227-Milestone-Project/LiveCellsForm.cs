@@ -18,10 +18,14 @@ namespace CST_227_Milestone_Project
         public int yPadding { get; } = 49;
         private Dictionary<GameCell, PictureBox> cells = new Dictionary<GameCell, PictureBox>();
         private bool inProgress = false;
+        public int NumberOfCells { get; set; } = 10;
+        public decimal Difficulty { get; set; } = .15M;
+        PreferencesForm sizeForm;
 
         public LiveCellsForm()
         {
             InitializeComponent();
+            sizeForm = new PreferencesForm(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -48,39 +52,52 @@ namespace CST_227_Milestone_Project
         }
         private void StartGame()
         {
-            gameBoard = new MinesweeperGame(1);
+            gameBoard = new MinesweeperGame(NumberOfCells, Difficulty);
             inProgress = true;
             gameBoard.PlayGame();
             for (int x = 1; x <= gameBoard.BoardSize; x++)
             {
                 for (int y = 1; y <= gameBoard.BoardSize; y++)
                 {
-                    GameCell currentCell = gameBoard.GameCells.Find(cell => cell.X == x && cell.Y == y);
-                    PictureBox pictureBox = new PictureBox
-                    {
-                        Name = "pictureBox" + x.ToString() + y.ToString(),
-                        Size = new Size(currentCell.CellWidth, currentCell.CellHeight),
-                        Location = new Point(x * currentCell.CellWidth, y * currentCell.CellHeight),
-                        Visible = true
-                    };
-                    pictureBox.Image = currentCell.Image.Image;
-                    pictureBox.MouseClick += new MouseEventHandler((o, a) => 
-                        {
-                            gameBoard.ClickCell(currentCell);
-                            if (currentCell.Live)
-                            {
-                                RevealBoard();
-                            }
-                            FrameUpdate();
-                        }
-                    );
-                    this.Controls.Add(pictureBox);
-                    cells.Add(currentCell, pictureBox);
+                    CreateFormCell(x, y);
                 }
             }
-            int xSize = (gameBoard.BoardSize * gameBoard.CellSize) + xPadding + margin;
-            int ySize = (gameBoard.BoardSize * gameBoard.CellSize) + margin + yPadding;
-            this.Size = new Size(xSize, ySize);
+            SetFormSize();
+        }
+
+        private void CreateFormCell(int x, int y)
+        {
+            GameCell currentCell = gameBoard.GameCells.Find(cell => cell.X == x && cell.Y == y);
+            PictureBox pictureBox = new PictureBox
+            {
+                Name = "pictureBox" + x.ToString() + y.ToString(),
+                Size = currentCell.Size,
+                Location = new Point(x * currentCell.Size.Width, y * currentCell.Size.Height),
+                Visible = true
+            };
+            pictureBox.Image = currentCell.Image.Image;
+            pictureBox.MouseClick += new MouseEventHandler((o, a) =>
+            {
+                gameBoard.ClickCell(currentCell);
+                if (currentCell.Live)
+                {
+                    RevealBoard();
+                }
+                FrameUpdate();
+            }
+            );
+            this.Controls.Add(pictureBox);
+            cells.Add(currentCell, pictureBox);
+        }
+
+        private void SetFormSize()
+        {
+            int xSize = (gameBoard.BoardSize * gameBoard.CellSize.Width) + xPadding + margin;
+            int ySize = (gameBoard.BoardSize * gameBoard.CellSize.Height) + margin + yPadding;
+            Size size = new Size(xSize, ySize);
+            this.MinimumSize = size;
+            this.MaximumSize = size;
+            this.Size = size;
         }
 
         private void RevealToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,7 +110,6 @@ namespace CST_227_Milestone_Project
             string message = "WOW! You Won!";
             if (inProgress)
             {
-                //gameBoard.RevealBoard();
                 UpdatePictures();
                 MessageBox.Show(message, "WINNER!");
             }
@@ -123,11 +139,26 @@ namespace CST_227_Milestone_Project
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            NewGame();
+        }
+
+        public void NewGame()
+        {
             foreach (GameCell currentCell in gameBoard.GameCells)
             {
                 (this.Controls.Find("pictureBox" + currentCell.X.ToString() + currentCell.Y.ToString(), true)[0]).Dispose();
             }
             StartGame();
+        }
+
+        private void sizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sizeForm.ShowDialog();
+        }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sizeForm.ShowDialog();
         }
     }
 }

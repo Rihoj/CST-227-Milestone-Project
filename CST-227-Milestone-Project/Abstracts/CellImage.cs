@@ -25,8 +25,8 @@ namespace CST_227_Milestone_Project
         public CellImage(GameCell gameCell)
         {
             gc = gameCell;
-            CellWidth = gameCell.CellWidth;
-            CellHeight = gameCell.CellHeight;
+            CellWidth = gameCell.Size.Width;
+            CellHeight = gameCell.Size.Height;
             font = new Font("Courier New", CellWidth, GraphicsUnit.Pixel);
             CreateImage();
             CreateIcon();

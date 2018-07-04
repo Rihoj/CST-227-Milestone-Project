@@ -9,7 +9,7 @@ namespace CST_227_Milestone_Project
 {
     class MinesweeperGame : GameBoard, IPlayable
     {
-        public MinesweeperGame(int size) : base(size)
+        public MinesweeperGame(int size, decimal difficulty) : base(size, difficulty)
         {
         }
 

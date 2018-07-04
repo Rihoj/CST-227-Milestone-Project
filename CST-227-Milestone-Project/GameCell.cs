@@ -10,8 +10,7 @@ namespace CST_227_Milestone_Project
 {
     class GameCell
     {
-        public int CellHeight { get; set; } = 30;
-        public int CellWidth { get; set; } = 30;
+        public Size Size { get; set; } = new Size(30, 30);
         public int X { get; set; } = -1;
         public int Y { get; set; } = -1;
         public bool Visited { get; set; } = false;
@@ -26,10 +25,9 @@ namespace CST_227_Milestone_Project
             Image = new CellBaseImage(this);
         }
 
-        public GameCell(int cellHeight, int cellWidth, int x, int y) : this(x, y)
+        public GameCell(Size cellSize, int x, int y) : this(x, y)
         {
-            X = x;
-            Y = y;
+            Size = cellSize;
         }
 
         public GameCell(int x, int y, bool visited, bool live) : this(x, y)

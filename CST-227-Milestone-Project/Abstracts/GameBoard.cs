@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,13 @@ namespace CST_227_Milestone_Project
     {
         public List<GameCell> GameCells { get; } = new List<GameCell>();
         public int BoardSize { get; }
-        public int CellSize { get; } = 30;
+        public Size CellSize { get; } = new Size(30, 30);
+        public decimal Difficulty = .15M;
 
-        public GameBoard(int size)
+        public GameBoard(int size, decimal difficulty)
         {
-            BoardSize = size * 10;
+            BoardSize = size;
+            Difficulty = difficulty;
         }
 
         protected void CreateCells()
@@ -24,7 +27,7 @@ namespace CST_227_Milestone_Project
             {
                 for (int y = 1; y <= BoardSize; y++)
                 {
-                    GameCells.Add(new GameCell(CellSize, CellSize, x, y));
+                    GameCells.Add(new GameCell(CellSize, x, y));
                 }
             }
         }
@@ -32,7 +35,7 @@ namespace CST_227_Milestone_Project
         public void ActivateCells()
         {
             int cellCount = BoardSize * BoardSize;
-            int numberOfActiveCells = (int)(cellCount * .15);
+            int numberOfActiveCells = (int)(cellCount * Difficulty);
             Random rnd = new Random();
             for (int i = 0; i < numberOfActiveCells; i++)
             {
