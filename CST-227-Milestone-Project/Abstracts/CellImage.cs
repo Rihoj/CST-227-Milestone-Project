@@ -18,6 +18,8 @@ namespace CST_227_Milestone_Project
         protected Color lightGray = Color.FromArgb(255, 204, 204, 204);
         protected Color mediumGray = Color.FromArgb(255, 136, 136, 136);
         protected Color darkGray = Color.FromArgb(255, 68, 68, 68);
+        
+
         Brush brush = new SolidBrush(Color.Black);
         Font font;
         protected abstract string IconText { get; }

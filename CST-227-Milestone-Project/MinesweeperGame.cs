@@ -20,11 +20,18 @@ namespace CST_227_Milestone_Project
             base.SetNeighbors();
         }
 
-        public override void RevealBoard()
+        public override void RevealBoard(bool markFlags = false)
         {
             foreach(GameCell gameCell in GameCells)
             {
-                ClickCell(gameCell);
+                if (markFlags && gameCell.Live)
+                {
+                    gameCell.FlagCell(true);
+                }
+                else
+                {
+                    gameCell.ClickCell();
+                }
             }
         }
     }

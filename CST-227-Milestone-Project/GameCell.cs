@@ -51,5 +51,28 @@ namespace CST_227_Milestone_Project
             Neighbors.CheckNeighbors();
         }
 
+        public void FlagCell(bool success = false)
+        {
+            if (Image is CellBaseImage && success)
+            {
+                Image = new CellSuccessFlagImage(this);
+            }
+            else
+            {
+                if (Image is CellWarningFlagImage)
+                {
+                    Image = new CellBaseImage(this);
+                }
+                else if (Image is CellCautionFlagImage)
+                {
+                    Image = new CellWarningFlagImage(this);
+                }
+                else
+                {
+                    Image = new CellCautionFlagImage(this);
+                }
+            }
+        }
+
     }
 }

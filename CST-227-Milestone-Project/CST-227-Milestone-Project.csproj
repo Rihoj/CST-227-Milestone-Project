@@ -45,6 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\CellFlagImage.cs" />
+    <Compile Include="CellImages\CellSuccessFlagImage.cs" />
+    <Compile Include="CellImages\CellWarningFlagImage.cs" />
+    <Compile Include="CellImages\CellCautionFlagImage.cs" />
     <Compile Include="CellImages\CellHitImage.cs" />
     <Compile Include="CellImages\CellSafeImage.cs" />
     <Compile Include="CellImages\CellBaseImage.cs" />

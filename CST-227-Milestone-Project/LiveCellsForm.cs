@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CST_227_Milestone_Project
@@ -21,6 +22,7 @@ namespace CST_227_Milestone_Project
         public int NumberOfCells { get; set; } = 10;
         public decimal Difficulty { get; set; } = .15M;
         PreferencesForm sizeForm;
+        Stopwatch stopWatch;
 
         public LiveCellsForm()
         {
@@ -30,6 +32,7 @@ namespace CST_227_Milestone_Project
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            stopWatch = new Stopwatch();
             StartGame();
         }
 
@@ -52,6 +55,8 @@ namespace CST_227_Milestone_Project
         }
         private void StartGame()
         {
+            stopWatch.Reset();
+            stopWatch.Start();
             gameBoard = new MinesweeperGame(NumberOfCells, Difficulty);
             inProgress = true;
             gameBoard.PlayGame();
@@ -78,10 +83,17 @@ namespace CST_227_Milestone_Project
             pictureBox.Image = currentCell.Image.Image;
             pictureBox.MouseClick += new MouseEventHandler((o, a) =>
             {
-                gameBoard.ClickCell(currentCell);
-                if (currentCell.Live)
+                if (a.Button == MouseButtons.Left)
                 {
-                    RevealBoard();
+                    gameBoard.ClickCell(currentCell);
+                    if (currentCell.Live)
+                    {
+                        RevealBoard();
+                    }
+                }
+                else if(a.Button == MouseButtons.Right && !currentCell.Visited)
+                {
+                    gameBoard.RightClickCell(currentCell);
                 }
                 FrameUpdate();
             }
@@ -107,9 +119,13 @@ namespace CST_227_Milestone_Project
 
         private void UserWins()
         {
-            string message = "WOW! You Won!";
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
+            string message = "WOW! You Won in "+elapsedTime+"!";
             if (inProgress)
             {
+                gameBoard.RevealBoard(true);
                 UpdatePictures();
                 MessageBox.Show(message, "WINNER!");
             }

@@ -71,11 +71,25 @@ namespace CST_227_Milestone_Project
             return gameCell;
         }
 
-        public virtual void RevealBoard()
+        public GameCell RightClickCell(GameCell gc)
+        {
+            GameCell gameCell = GameCells.Find(cell => cell.X == gc.X && cell.Y == gc.Y);
+            gameCell.FlagCell();
+            return gameCell;
+        }
+
+        public virtual void RevealBoard(bool markFlags = false)
         {
             foreach(GameCell gameCell in GameCells)
             {
-                gameCell.ClickCell();
+                if (markFlags && gameCell.Live)
+                {
+                    gameCell.FlagCell(true);
+                }
+                else
+                {
+                    gameCell.ClickCell();
+                }
             }
         }
 
