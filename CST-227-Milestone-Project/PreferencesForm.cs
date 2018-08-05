@@ -7,21 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CST_227_Milestone_Project.Interfaces;
+using CST_227_Milestone_Project.Difficulties;
+using CST_227_Milestone_Project.BoardSizes;
 
 namespace CST_227_Milestone_Project
 {
     public partial class PreferencesForm : Form
     {
         LiveCellsForm liveCellsForm;
-        int BoardSize = 10;
-        decimal Difficulty = .15M;
+        public IBoardSize BoardSize = new SmallBoard();
+        public IDifficulty Difficulty = new NormalDifficulty();
 
         public PreferencesForm(LiveCellsForm liveCellsForm)
         {
             this.liveCellsForm = liveCellsForm;
             InitializeComponent();
-            XsmallRadioButton.Checked = true;
-            SmallRadioButton.Checked = false;
+            XsmallRadioButton.Checked = false;
+            SmallRadioButton.Checked = true;
             MedRadioButton.Checked = false;
             LargeRadioButton.Checked = false;
 
@@ -41,42 +44,42 @@ namespace CST_227_Milestone_Project
 
         private void XsmallRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            BoardSize = 10;
+            BoardSize = new XsmallBoard();
         }
 
         private void SmallRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            BoardSize = 15;
+            BoardSize = new SmallBoard();
         }
 
         private void MedRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            BoardSize = 20;
+            BoardSize = new MedBoard();
         }
 
         private void LargeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            BoardSize = 25;
+            BoardSize = new LargeBoard();
         }
 
         private void easyRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            Difficulty = .1M;
+            Difficulty = new EasyDifficulty();
         }
 
         private void NormalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            Difficulty = .15M;
+            Difficulty = new NormalDifficulty();
         }
 
         private void HardRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            Difficulty = .20M;
+            Difficulty = new HardDifficulty();
         }
 
         private void InsaneRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            Difficulty = .3M;
+            Difficulty = new InsaneDifficulty();
         }
     }
 }

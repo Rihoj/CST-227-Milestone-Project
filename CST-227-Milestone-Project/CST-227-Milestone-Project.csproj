@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstracts\CellFlagImage.cs" />
+    <Compile Include="BoardSizes\LargeBoard.cs" />
+    <Compile Include="BoardSizes\MedBoard.cs" />
+    <Compile Include="BoardSizes\SmallBoard.cs" />
+    <Compile Include="BoardSizes\XsmallBoard.cs" />
+    <Compile Include="Difficulties\HardDifficulty.cs" />
+    <Compile Include="Difficulties\InsaneDifficulty.cs" />
+    <Compile Include="Difficulties\NormalDifficulty.cs" />
+    <Compile Include="Difficulties\EasyDifficulty.cs" />
     <Compile Include="CellImages\CellSuccessFlagImage.cs" />
     <Compile Include="CellImages\CellWarningFlagImage.cs" />
     <Compile Include="CellImages\CellCautionFlagImage.cs" />
@@ -54,6 +63,8 @@
     <Compile Include="CellImages\CellBaseImage.cs" />
     <Compile Include="Abstracts\CellImage.cs" />
     <Compile Include="Interfaces\ICellImage.cs" />
+    <Compile Include="Interfaces\IBoardSize.cs" />
+    <Compile Include="Interfaces\IDifficulty.cs" />
     <Compile Include="Interfaces\IPlayable.cs" />
     <Compile Include="LiveCellsForm.cs">
       <SubType>Form</SubType>
@@ -65,6 +76,7 @@
     <Compile Include="GameCell.cs" />
     <Compile Include="MinesweeperGame.cs" />
     <Compile Include="Neighbors.cs" />
+    <Compile Include="PlayerStat.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PreferencesForm.cs">
@@ -72,6 +84,13 @@
     </Compile>
     <Compile Include="PreferencesForm.Designer.cs">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaveData.cs" />
+    <Compile Include="ScoreBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreBoard.Designer.cs">
+      <DependentUpon>ScoreBoard.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="LiveCellsForm.resx">
       <DependentUpon>LiveCellsForm.cs</DependentUpon>
@@ -87,6 +106,9 @@
     </Compile>
     <EmbeddedResource Include="PreferencesForm.resx">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreBoard.resx">
+      <DependentUpon>ScoreBoard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -5,17 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CST_227_Milestone_Project.Interfaces;
+using CST_227_Milestone_Project.Difficulties;
 
 namespace CST_227_Milestone_Project
 {
     abstract class GameBoard : IPlayable
     {
         public List<GameCell> GameCells { get; } = new List<GameCell>();
-        public int BoardSize { get; }
+        public IBoardSize BoardSize { get; }
         public Size CellSize { get; } = new Size(30, 30);
-        public decimal Difficulty = .15M;
+        public IDifficulty Difficulty = new NormalDifficulty();
 
-        public GameBoard(int size, decimal difficulty)
+        public GameBoard(IBoardSize size, IDifficulty difficulty)
         {
             BoardSize = size;
             Difficulty = difficulty;
@@ -23,9 +25,9 @@ namespace CST_227_Milestone_Project
 
         protected void CreateCells()
         {
-            for (int x = 1; x <= BoardSize; x++)
+            for (int x = 1; x <= BoardSize.Size; x++)
             {
-                for (int y = 1; y <= BoardSize; y++)
+                for (int y = 1; y <= BoardSize.Size; y++)
                 {
                     GameCells.Add(new GameCell(CellSize, x, y));
                 }
@@ -34,18 +36,18 @@ namespace CST_227_Milestone_Project
 
         public void ActivateCells()
         {
-            int cellCount = BoardSize * BoardSize;
-            int numberOfActiveCells = (int)(cellCount * Difficulty);
+            int cellCount = BoardSize.Size * BoardSize.Size;
+            int numberOfActiveCells = (int)(cellCount * Difficulty.Difficulty);
             Random rnd = new Random();
             for (int i = 0; i < numberOfActiveCells; i++)
             {
-                int x = rnd.Next(1, BoardSize + 1);
-                int y = rnd.Next(1, BoardSize + 1);
+                int x = rnd.Next(1, BoardSize.Size + 1);
+                int y = rnd.Next(1, BoardSize.Size + 1);
                 GameCell result = GameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
                 while (result == null)
                 {
-                    x = rnd.Next(1, BoardSize + 1);
-                    y = rnd.Next(1, BoardSize + 1);
+                    x = rnd.Next(1, BoardSize.Size + 1);
+                    y = rnd.Next(1, BoardSize.Size + 1);
                     result = GameCells.Find(cell => cell.X == x && cell.Y == y && !cell.Live);
                 }
                 result.Live = true;

@@ -35,6 +35,7 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +56,7 @@
             this.newToolStripMenuItem,
             this.preferencesToolStripMenuItem,
             this.revealToolStripMenuItem,
+            this.cheatToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -63,30 +65,37 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.preferencesToolStripMenuItem.Text = "&Preferences";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // revealToolStripMenuItem
             // 
             this.revealToolStripMenuItem.Name = "revealToolStripMenuItem";
-            this.revealToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.revealToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.revealToolStripMenuItem.Text = "&Reveal";
             this.revealToolStripMenuItem.Click += new System.EventHandler(this.RevealToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // cheatToolStripMenuItem
+            // 
+            this.cheatToolStripMenuItem.Name = "cheatToolStripMenuItem";
+            this.cheatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cheatToolStripMenuItem.Text = "High Scores";
+            this.cheatToolStripMenuItem.Click += new System.EventHandler(this.cheatToolStripMenuItem_Click);
             // 
             // LiveCellsForm
             // 
@@ -114,6 +123,7 @@
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem cheatToolStripMenuItem;
     }
 }
 

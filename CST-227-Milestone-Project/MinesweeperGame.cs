@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CST_227_Milestone_Project.Interfaces;
 
 namespace CST_227_Milestone_Project
 {
     class MinesweeperGame : GameBoard, IPlayable
     {
-        public MinesweeperGame(int size, decimal difficulty) : base(size, difficulty)
+        public MinesweeperGame(IBoardSize size, IDifficulty difficulty) : base(size, difficulty)
         {
         }
 

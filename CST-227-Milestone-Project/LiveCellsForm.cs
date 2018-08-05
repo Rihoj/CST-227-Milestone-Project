@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows.Forms;
+using CST_227_Milestone_Project.Interfaces;
+using CST_227_Milestone_Project.Difficulties;
+using CST_227_Milestone_Project.BoardSizes;
+using System.IO;
 
 namespace CST_227_Milestone_Project
 {
@@ -15,24 +19,25 @@ namespace CST_227_Milestone_Project
     {
         GameBoard gameBoard;
         public int margin { get; } = 60;
-        public int xPadding { get; } = 16;
-        public int yPadding { get; } = 49;
+        public new Size Padding { get; } = new Size(16, 49);
         private Dictionary<GameCell, PictureBox> cells = new Dictionary<GameCell, PictureBox>();
         private bool inProgress = false;
-        public int NumberOfCells { get; set; } = 10;
-        public decimal Difficulty { get; set; } = .15M;
+        public IBoardSize NumberOfCells { get; set; } = new SmallBoard();
+        public IDifficulty Difficulty { get; set; } = new NormalDifficulty();
         PreferencesForm sizeForm;
-        Stopwatch stopWatch;
+        PlayerStat player;
+        List<PlayerStat> HighScores { get; set; } = new List<PlayerStat>();
+        private SaveData saveData = new SaveData();
 
         public LiveCellsForm()
         {
             InitializeComponent();
             sizeForm = new PreferencesForm(this);
+            HighScores = saveData.LoadHighScores();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            stopWatch = new Stopwatch();
             StartGame();
         }
 
@@ -55,14 +60,13 @@ namespace CST_227_Milestone_Project
         }
         private void StartGame()
         {
-            stopWatch.Reset();
-            stopWatch.Start();
+            player = new PlayerStat(NumberOfCells, Difficulty);
             gameBoard = new MinesweeperGame(NumberOfCells, Difficulty);
             inProgress = true;
             gameBoard.PlayGame();
-            for (int x = 1; x <= gameBoard.BoardSize; x++)
+            for (int x = 1; x <= gameBoard.BoardSize.Size; x++)
             {
-                for (int y = 1; y <= gameBoard.BoardSize; y++)
+                for (int y = 1; y <= gameBoard.BoardSize.Size; y++)
                 {
                     CreateFormCell(x, y);
                 }
@@ -104,8 +108,8 @@ namespace CST_227_Milestone_Project
 
         private void SetFormSize()
         {
-            int xSize = (gameBoard.BoardSize * gameBoard.CellSize.Width) + xPadding + margin;
-            int ySize = (gameBoard.BoardSize * gameBoard.CellSize.Height) + margin + yPadding;
+            int xSize = (gameBoard.BoardSize.Size * gameBoard.CellSize.Width) + Padding.Width + margin;
+            int ySize = (gameBoard.BoardSize.Size * gameBoard.CellSize.Height) + margin + Padding.Height;
             Size size = new Size(xSize, ySize);
             this.MinimumSize = size;
             this.MaximumSize = size;
@@ -119,15 +123,18 @@ namespace CST_227_Milestone_Project
 
         private void UserWins()
         {
-            stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
-            string message = "WOW! You Won in "+elapsedTime+"!";
+            player.EndGame();
+            string message = "WOW! You Won in "+player.GetTime()+"!\n\n Enter your name to save your time!";
             if (inProgress)
             {
                 gameBoard.RevealBoard(true);
                 UpdatePictures();
-                MessageBox.Show(message, "WINNER!");
+                string input = Microsoft.VisualBasic.Interaction.InputBox(message, "Winner!", "", -1, -1);
+                if(input.Length > 0)
+                {
+                    player.PlayerName = input;
+                    saveData.SaveGameData(player);
+                }
             }
             inProgress = false;
         }
@@ -175,6 +182,12 @@ namespace CST_227_Milestone_Project
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             sizeForm.ShowDialog();
+        }
+
+        private void cheatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScoreBoard scoreBoard = new ScoreBoard(HighScores);
+            scoreBoard.Show();
         }
     }
 }
